@@ -3,7 +3,8 @@ const { mongoose, Schema } = require("mongoose");
 const CoAdminSchema = new Schema({
   companyId: { 
     type: Schema.Types.ObjectId,
-    unique: true 
+    unique: true,
+    default: function () { return this._id; }
   },
   companyName: {
     type: String,

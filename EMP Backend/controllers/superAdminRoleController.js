@@ -32,9 +32,9 @@ const getAllCompanies = async (req, res) => {
 
   const getCompany = async (req,res) => {
     let success = false;
-    const {companyId} = req.params;
+    const {id} = req.params;
     try {
-        const company = await CoAdmin.findById(companyId);
+        const company = await CoAdmin.findById(id);
 
         if (!company) {
           return res.status(404).json({
@@ -95,10 +95,10 @@ const addCompany = async (req, res) => {
 
 const updateCompany = async (req, res) => {
   let success = false;
-  const { companyId } = req.params;
+  const { id } = req.params;
   const { companyName, email, password, contactNumber, logo } = req.body;
 
-  const existing_company = await CoAdmin.findById( companyId );
+  const existing_company = await CoAdmin.findById(id);
   if (!existing_company) {
     return res.status(400).json({
       data: success,
@@ -120,15 +120,19 @@ const updateCompany = async (req, res) => {
 
   try {
     const updatedCompany = await CoAdmin.findByIdAndUpdate(
-      companyId,
+      id,
       {
         $set: updateFields,
       },
       { new: true }
     );
+ 
+    // Check if the updated company is the same as the previous one
+    const isUpdated = Object.keys(updateFields).some(
+      (field) => updatedCompany[field] !== existing_company[field]
+    );
 
-    // Check if something was updated
-    if (updatedCompany.nModified > 0) {
+    if (isUpdated) {
       success = true;
       return res.status(200).json({
         data: success,

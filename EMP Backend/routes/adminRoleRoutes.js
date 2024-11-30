@@ -4,9 +4,9 @@ const { addCompany, updateCompany,deleteCompany,getAllCompanies,getCompany } = r
 const fetchAdmin = require('../middlewares/fetchSuperAdmin')
 
 router.post('/addCompany',fetchAdmin,addCompany)
-router.post('/updateCompany/:id',fetchAdmin,updateCompany)
-router.post('/deleteCompany/:id',fetchAdmin,deleteCompany)
-router.post('/getCompany',fetchAdmin,getCompany)
-router.post('/getAllCompanies',fetchAdmin,getAllCompanies)
+router.put('/updateCompany/:id',fetchAdmin,updateCompany)
+router.delete('/deleteCompany/:id',fetchAdmin,deleteCompany)
+router.get('/getCompany/:id',fetchAdmin,getCompany)
+router.get('/getAllCompanies',fetchAdmin,getAllCompanies)
 
 module.exports = router
