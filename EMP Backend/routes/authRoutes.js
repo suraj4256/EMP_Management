@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const {RegisterSuperAdmin,LoginSuperAdmin,LoginCompany} = require('../controllers/authController');
+const {RegisterSuperAdmin,loginUser} = require('../controllers/authController');
 
 
 router.post('/registerSuperAdmin',RegisterSuperAdmin)
-router.post('/loginSuperAdmin',LoginSuperAdmin)
-router.post('/loginCompany',LoginCompany)
+router.post('/login',loginUser)
+
+
+
 
 module.exports = router;

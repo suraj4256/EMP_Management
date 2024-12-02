@@ -4,7 +4,7 @@ const SuperAdminSchema = new Schema({
   
     UserRole:{
      type:String,
-     default:"SuperAdmin",
+     default:"Admin",
      required:true
     },
     email:{

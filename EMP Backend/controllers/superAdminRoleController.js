@@ -1,62 +1,60 @@
 const CoAdmin = require("../models/CoAdminSchema");
 const bcrypt = require("bcryptjs");
 
-
 const getAllCompanies = async (req, res) => {
-    let success = false;
-  
-    try {
-      const companies = await CoAdmin.find();
-  
-      if (!companies || companies.length === 0) {
-        return res.status(404).json({
-          data: success,
-          message: "No companies found",
-        });
-      }
-  
-      success = true;
-      return res.status(200).json({
+  let success = false;
+  try {
+    const companies = await CoAdmin.find();
+
+    if (!companies || companies.length === 0) {
+      return res.status(404).json({
         data: success,
-        companies,
-        message: "Companies fetched successfully",
-      });
-    } catch (error) {
-      console.error("Error fetching companies:", error);
-      return res.status(500).json({
-        data: success,
-        message: "Error fetching companies",
+        message: "No companies found",
       });
     }
-  };
 
-  const getCompany = async (req,res) => {
-    let success = false;
-    const {id} = req.params;
-    try {
-        const company = await CoAdmin.findById(id);
-
-        if (!company) {
-          return res.status(404).json({
-            data: success,
-            message: "Company not found",
-          });
-        }
-
-        success = true;
-        return res.status(200).json({
-          data: success,
-          company,
-          message: "Company fetched successfully",
-        });
-      } catch (error) {
-        console.error("Error fetching company:", error);
-        return res.status(500).json({
-          data: success,
-          message: "Error fetching company",
-        });
-      }
+    success = true;
+    return res.status(200).json({
+      data: success,
+      companies,
+      message: "Companies fetched successfully",
+    });
+  } catch (error) {
+    console.error("Error fetching companies:", error);
+    return res.status(500).json({
+      data: success,
+      message: "Error fetching companies",
+    });
   }
+};
+
+const getCompany = async (req, res) => {
+  let success = false;
+  const { id } = req.params;
+  try {
+    const company = await CoAdmin.findById(id);
+
+    if (!company) {
+      return res.status(404).json({
+        data: success,
+        message: "Company not found",
+      });
+    }
+
+    success = true;
+    return res.status(200).json({
+      data: success,
+      company,
+      message: "Company fetched successfully",
+    });
+  } catch (error) {
+    console.error("Error fetching company:", error);
+    return res.status(500).json({
+      data: success,
+      message: "Error fetching company",
+    });
+  }
+};
 
 const addCompany = async (req, res) => {
   let success = false;
@@ -80,6 +78,7 @@ const addCompany = async (req, res) => {
       logo: logo,
     });
     success = true;
+    // Nodemailer to be used here...
     res.status(200).json({
       data: success,
       message: "Company created successfully",
@@ -126,7 +125,7 @@ const updateCompany = async (req, res) => {
       },
       { new: true }
     );
- 
+
     // Check if the updated company is the same as the previous one
     const isUpdated = Object.keys(updateFields).some(
       (field) => updatedCompany[field] !== existing_company[field]
@@ -134,6 +133,7 @@ const updateCompany = async (req, res) => {
 
     if (isUpdated) {
       success = true;
+      // Nodemailer to be used here...
       return res.status(200).json({
         data: success,
         message: "Company updated successfully",
@@ -177,4 +177,10 @@ const deleteCompany = async (req, res) => {
   }
 };
 
-module.exports = { addCompany, updateCompany, deleteCompany, getAllCompanies, getCompany };
+module.exports = {
+  addCompany,
+  updateCompany,
+  deleteCompany,
+  getAllCompanies,
+  getCompany,
+};

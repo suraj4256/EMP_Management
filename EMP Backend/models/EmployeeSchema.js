@@ -28,7 +28,7 @@ const UserSchema = new Schema(
       required: true,
       trim: true, // Job title, e.g., Singer, Guitarist
     },
-    role: {
+    UserRole: {
       type: String,
       enum: ["Manager", "Employee"], // Restricts values to Manager or Employee
       required: true,

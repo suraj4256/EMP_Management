@@ -26,17 +26,17 @@ const TaskSchema = new Schema({
     default: 'Pending',  
   },   
 
-  assignedTo:{
+  assignedTo:[{
     type: Schema.Types.ObjectId,
     ref: 'User', // Reference to the User model 
     required: true, 
-  },   
+  }],   
 
-  assignedBy:{
+  assignedBy:[{
     type: Schema.Types.ObjectId,
     ref: 'User', // Reference to the User model 
     required: true,
-  },   
+  }],   
 
   companyId:{
     type: Schema.Types.ObjectId,

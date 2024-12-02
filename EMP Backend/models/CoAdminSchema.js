@@ -28,6 +28,11 @@ const CoAdminSchema = new Schema({
     default:'',
     type: String,
   },
+  UserRole:{
+    type:String,
+    default:"Company",
+    required:true
+   },
 });
 
 const CoAdmin = mongoose.model("CoAdmin", CoAdminSchema);
