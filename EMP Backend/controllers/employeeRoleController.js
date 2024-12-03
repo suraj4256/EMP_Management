@@ -7,8 +7,8 @@ const createTask = async (req, res) => {
     try {
       const { id } = req.params; //Manager id
       const { title, description, deadline, assignedTo, companyId } = req.body;
-      const existing_manager = await CoAdmin.find({assignedBy:id});
-      if (!existing_manager) {
+      const existing_company = await Task.find({companyId:companyId});
+      if (!existing_company) {
         return res.status(400).json({
           data: success,
           message: "Manager doesn't exists",
@@ -43,7 +43,7 @@ const createTask = async (req, res) => {
   const updateTask = async (req, res) => {
     let success = false;
     const {id} = req.params; //Task id
-    const { title, description, deadline, status, assignedTo, assignedBy } = req.body;
+    const { title, description, deadline, status, assignedTo } = req.body;
     const existing_Task = await Task.findById(id);
     if (!existing_Task) {
       return res.status(400).json({
@@ -157,7 +157,7 @@ const createTask = async (req, res) => {
     }
   };
   
-  
+
   const getAllTasks = async(req,res)=>{
     let success = false;
     try {
