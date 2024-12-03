@@ -3,6 +3,7 @@ require('./db')
 const authRouter = require('./routes/authRoutes')
 const adminRoleRouter = require('./routes/adminRoleRoutes')
 const companyRole = require('./routes/companyRoutes')
+const employeeRole = require('./routes/employeeRoutes')
 const bodyParser = require('body-parser');
 const app = express();
 const port = 5000;
@@ -21,6 +22,10 @@ app.use('/api/adminrole',adminRoleRouter)
 
 // Company Roles
 app.use('/api/companyrole',companyRole)
+
+// Employee - Manager roles
+app.use('/api/employeerole',employeeRole)
+
 
 app.listen(port,()=>{
     console.log("Listening to Port ",port)
