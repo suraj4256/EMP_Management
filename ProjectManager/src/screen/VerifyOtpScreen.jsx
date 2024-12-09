@@ -5,18 +5,17 @@ import {
     SafeAreaView,
     StyleSheet,
     Text,
-    TextInput,
     TouchableOpacity,
     View,
   } from 'react-native';
-  import React, {useState} from 'react';
-  import {useNavigation} from '@react-navigation/native';
+import React, {useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import OtpInputs from 'react-native-otp-inputs';
 import OtpScreenImage from '../assets/otp_image.jpg'
   
   const VerifyOtpScreen = () => {
     const navigation = useNavigation();
-    const [email, setEmail] = useState('');
+    
     return (
       <SafeAreaView
         style={{

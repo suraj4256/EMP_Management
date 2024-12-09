@@ -5,25 +5,23 @@
  * @format
  */
 
-import React, { useEffect } from 'react';
-import {
-  StyleSheet,
-} from 'react-native';
+import React, {useEffect} from 'react';
+import {StyleSheet} from 'react-native';
 
-import SplashScreen from 'react-native-splash-screen'
+import SplashScreen from 'react-native-splash-screen';
 import StackNavigator from './src/navigation/StackNavigator';
 
+
 function App() {
- useEffect(()=>{
-  SplashScreen.hide();
- },[])
- 
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
+
   return (
-   <StackNavigator/>
+      <StackNavigator />
   );
 }
 
-const styles = StyleSheet.create({
-});
+const styles = StyleSheet.create({});
 
 export default App;

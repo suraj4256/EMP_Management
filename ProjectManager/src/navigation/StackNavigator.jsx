@@ -1,74 +1,54 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import HomeScreen from '../screen/HomeScreen';
+import React, {useEffect, useState} from 'react';
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import LoginScreen from '../screen/LoginScreen';
 import ForgetPassScreen from '../screen/ForgetPassScreen';
 import VerifyOtpScreen from '../screen/VerifyOtpScreen';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import AdminTabs from './tabNavigators/AdminTabs';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import UpdateCompany from '../screen/AdminScreens/UpdateCompany';
+import ViewCompany from '../screen/AdminScreens/ViewCompany';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
-  const Tab = createBottomTabNavigator();
-
-  const BottomTabs = () => {
-    
-    return (
-      <Tab.Navigator>
-        <Tab.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            tabBarActiveTintColor: 'black',
-          }}
-        />
-      </Tab.Navigator>
-    );
-  };
-
-  const AuthStack = () => {
-    return (
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{headerShown:false}}
-        />
-        <Stack.Screen
-          name="ForgetPassword"
-          component={ForgetPassScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="verifyOtp"
-          component={VerifyOtpScreen}
-          options={{headerShown: false}}
-        />
-      </Stack.Navigator>
-    );
-  };
-
-  const MainStack = () => {
-    return (
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Main"
-          component={BottomTabs}
-          options={(headerShown = false)}
-        />
-      </Stack.Navigator>
-    );
-  };
 
   return (
     <NavigationContainer>
-      <AuthStack />
+      <Stack.Navigator>
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="ForgetPassword"
+              component={ForgetPassScreen}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="verifyOtp"
+              component={VerifyOtpScreen}
+              options={{headerShown: false}}
+            />
+
+            <Stack.Screen
+              name="AdminTabs"
+              component={AdminTabs}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="UpdateCompany"
+              component={UpdateCompany}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="ViewCompany"
+              component={ViewCompany}
+              options={{headerShown: false}}
+            />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
 export default StackNavigator;
-
-const styles = StyleSheet.create({});
