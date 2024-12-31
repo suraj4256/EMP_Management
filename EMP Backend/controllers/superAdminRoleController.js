@@ -1,5 +1,67 @@
 const CoAdmin = require("../models/CoAdminSchema");
 const bcrypt = require("bcryptjs");
+const nodemailer = require("nodemailer");
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "surajdey2k1@gmail.com",
+    pass: "nbjsfntwiabwjdxb",
+  },
+});
+
+const sendSuccessfullAddMail = (email,password) => {
+  const mailOptions = {
+    from: "surajdey2k1@gmail.com",
+    to: email,
+    subject: "Company added Successfully",
+    text: `Company added with credentials email:${email} and Password:${password}`,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email Sent: " + info.response);
+    }
+  });
+};
+
+const sendSuccessfullUpdateMail = (email) => {
+  const mailOptions = {
+    from: "surajdey2k1@gmail.com",
+    to: email,
+    subject: "Updation Successfully",
+    text: `Company info Updated. Please login to check updates`,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email Sent: " + info.response);
+    }
+  });
+};
+
+const sendSuccessfullDeleteMail = (email) => {
+  const mailOptions = {
+    from: "surajdey2k1@gmail.com",
+    to: email,
+    subject: "Deletion Successfully",
+    text: `Company with email:${email} has been deleted`,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email Sent: " + info.response);
+    }
+  });
+};
+
+
 
 const getAllCompanies = async (req, res) => {
   let success = false;
@@ -78,7 +140,8 @@ const addCompany = async (req, res) => {
       logo: logo,
     });
     success = true;
-    // Nodemailer to be used here...
+    // Nodemailer function to be used here...
+    sendSuccessfullAddMail(email,password);
     res.status(200).json({
       data: success,
       message: "Company created successfully",
@@ -134,6 +197,7 @@ const updateCompany = async (req, res) => {
     if (isUpdated) {
       success = true;
       // Nodemailer to be used here...
+      sendSuccessfullUpdateMail(email)
       return res.status(200).json({
         data: success,
         message: "Company updated successfully",
@@ -164,6 +228,7 @@ const deleteCompany = async (req, res) => {
         message: "Company not found",
       });
     }
+    sendSuccessfullDeleteMail(email)
     res.status(200).json({
       message: "Company deleted successfully",
       data: deletedCompany,

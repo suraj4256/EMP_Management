@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {NavigationContainer, useNavigation} from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import LoginScreen from '../screen/LoginScreen';
 import ForgetPassScreen from '../screen/ForgetPassScreen';
 import VerifyOtpScreen from '../screen/VerifyOtpScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AdminTabs from './tabNavigators/AdminTabs';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import UpdateCompany from '../screen/AdminScreens/UpdateCompany';
 import ViewCompany from '../screen/AdminScreens/ViewCompany';
 
@@ -30,7 +29,6 @@ const StackNavigator = () => {
               component={VerifyOtpScreen}
               options={{headerShown: false}}
             />
-
             <Stack.Screen
               name="AdminTabs"
               component={AdminTabs}
