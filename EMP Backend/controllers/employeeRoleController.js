@@ -1,5 +1,48 @@
 const express = require('express');
 const Task = require('../models/TaskSchema');
+const Employee = require('../models/EmployeeSchema');
+const nodemailer = require("nodemailer");
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "surajdey2k1@gmail.com",
+    pass: "nbjsfntwiabwjdxb",
+  },
+});
+
+const sendTaskCreatedMail=async(managerId,EmployeeId,companyEmail)=>{
+
+  try {
+    const existingManager = await Employee.findById(managerId);
+    const existingEmployee = await Employee.findById(EmployeeId);
+
+    if (!existingManager || !existingEmployee) {
+      throw new Error("Manager or Employee not found");
+    }
+
+    const managerEmail = existingManager.email;
+    const employeeEmail = existingEmployee.email;
+  
+    const mailOptions = {
+      from: "surajdey2k1@gmail.com",
+      to: employeeEmail,managerEmail,companyEmail,
+      subject: "Task Created",
+      text: `Task Created by ${existingManager.email}`
+    };
+  
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email Sent: " + info.response);
+      }
+    });
+
+  } catch (error) {
+    console.log(error.message);
+  }
+}
 
 // Task creation by Manager
 const createTask = async (req, res) => {
@@ -24,8 +67,17 @@ const createTask = async (req, res) => {
       });
       success = true;
   
-      //  Nodemailer function will come here  -->
-  
+      //  Nodemailer function to provide mail  -->
+      
+      try {
+       await sendTaskCreatedMail(id, assignedTo, existing_company.email);
+      } catch (error) {
+        console.error("Failed to send email:", error.message);
+        return res.status(500).json({
+          message: "Task created, but failed to send email notification.",
+        });
+      }
+
       res.status(200).json({
         data: success,
         message: "Task Created Successfully",
