@@ -44,6 +44,10 @@ const sendTaskCreatedMail=async(managerId,EmployeeId,companyEmail)=>{
   }
 }
 
+async function sendTaskUpdatedMail(title, ){
+
+}
+
 // Task creation by Manager
 const createTask = async (req, res) => {
     let success = false;
@@ -68,7 +72,6 @@ const createTask = async (req, res) => {
       success = true;
   
       //  Nodemailer function to provide mail  -->
-      
       try {
        await sendTaskCreatedMail(id, assignedTo, existing_company.email);
       } catch (error) {
@@ -129,6 +132,15 @@ const createTask = async (req, res) => {
         success = true;
   
         //  Mail function will come here
+        try {
+          await sendTaskUpdatedMail(existing_Task.title, existing_Task.assignedTo, existing_Task.assignedBy, existing_Task.companyId);
+         } catch (error) {
+           console.error("Failed to send email:", error.message);
+           return res.status(500).json({
+             message: "Task updated, but failed to send email notification.",
+           });
+         }
+
   
         return res.status(200).json({
           data: success,
