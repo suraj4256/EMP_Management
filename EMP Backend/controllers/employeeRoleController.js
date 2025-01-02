@@ -1,6 +1,8 @@
 const express = require('express');
 const Task = require('../models/TaskSchema');
+const CoAdmin = require('../models/CoAdminSchema');
 const Employee = require('../models/EmployeeSchema');
+
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
@@ -11,6 +13,9 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+
+
+// Task creation mail
 const sendTaskCreatedMail=async(managerId,EmployeeId,companyEmail)=>{
 
   try {
@@ -44,8 +49,40 @@ const sendTaskCreatedMail=async(managerId,EmployeeId,companyEmail)=>{
   }
 }
 
-async function sendTaskUpdatedMail(title, ){
 
+// Task updation mail
+const sendTaskUpdatedMail = async (title,EmployeeId,managerId,companyId) => {
+  try {
+    const existingManager = await Employee.findById(managerId);
+    const existingEmployee = await Employee.findById(EmployeeId);
+    const existing_company = await CoAdmin.findById(companyId);
+
+    if (!existingManager || !existingEmployee || !existing_company) {
+      throw new Error("Manager or Employee or Company not found");
+    }
+
+    const managerEmail = existingManager.email;
+    const employeeEmail = existingEmployee.email;
+    const companyEmail = existing_company.email;
+  
+    const mailOptions = {
+      from: "surajdey2k1@gmail.com",
+      to: employeeEmail,managerEmail,companyEmail,
+      subject: "Task Updated",
+      text: `Task with existing title ${title} has been updated by ${managerEmail}`
+    };
+  
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email Sent: " + info.response);
+      }
+    });
+
+  } catch (error) {
+    console.log(error.message);
+  }
 }
 
 // Task creation by Manager
