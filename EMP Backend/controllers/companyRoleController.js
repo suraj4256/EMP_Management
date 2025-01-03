@@ -72,6 +72,8 @@ const getAllEmployee=async(req,res)=>{
   
 }
 
+
+
 // Creation of Employee
 const addEmployee = async (req, res) => {
   let success = false;
