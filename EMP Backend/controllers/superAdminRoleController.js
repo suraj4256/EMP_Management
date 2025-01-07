@@ -76,6 +76,7 @@ const getAllCompanies = async (req, res) => {
     }
 
     success = true;
+    
     return res.status(200).json({
       data: success,
       companies,
